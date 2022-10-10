@@ -29,6 +29,12 @@ app.use(cors({
 const authRoutes = require('./routes/auth.routes');
 app.use('/auth', authRoutes);
 
+const recipeRoutes = require('./routes/recipe.routes')
+app.use('/api', isAuthenticated, recipeRoutes)
+
+const eventRoutes = require('./routes/event.routes')
+app.use('/api', eventRoutes)
+
 app.listen('3001', () => {
     console.log('>> listening on port 3001 <<')
   });

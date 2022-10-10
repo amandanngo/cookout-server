@@ -10,7 +10,14 @@ const recipeSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    description: String,
+    servings: Number,
+    ingredients: [{
+        type: String
+    }],
+    directions: String,
+    pictureUrl: String
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

@@ -13,8 +13,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
-        minLength: true
+        required: true
     },
     recipes: [{
         type: Schema.Types.ObjectId,
