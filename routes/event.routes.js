@@ -16,6 +16,7 @@ router.post('/events', (req,res,next) => {
         title,
         date,
         host: _id,
+        attendeeNum: 0,
         attendeeLimit,
         location
     })
@@ -37,24 +38,20 @@ router.post('/events', (req,res,next) => {
         .catch(err =>{ res.json(err) })
 })
 
-//All User's Events
+// User's Events
 router.get('/events', (req,res,next) => {
     const {_id} = req.payload;
 
-    User.findById(_id)
-    .populate('events')
-    .then(foundUser =>{
-        return foundUser.events;
-    })
+    Event.find({host: _id})
+    .populate('attendees')
     .then(userEvents => {
         res.json({events: userEvents})
     })
     .catch(err => res.json(err))
 })
 
-//User's Events
+//All User's Events
 router.get('/events-feed', (req,res,next) => {
-    const {_id} = req.payload;
 
     Event.find()
     .populate('host')
@@ -67,6 +64,18 @@ router.get('/events-feed', (req,res,next) => {
     .catch(err => res.json(err))
 })
 
+router.put('/events/:eventId', (req,res,next) => {
+    const {eventId} = req.params;
+
+    Event.findByIdAndUpdate(eventId, req.body, {new: true})
+        .then(updatedEvent => {
+            res.json({
+                message: "PUT /events worked",
+                event: updatedEvent
+            })
+        })
+        .catch(err => res.json(err))
+})
 
 router.delete('/events/:eventId', (req,res,next) => {
     const {eventId} = req.params;

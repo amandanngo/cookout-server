@@ -67,6 +67,22 @@ router.get('/recipes-feed', (req,res,next) => {
         .catch(err => res.json(err))
 })
 
+//Get single recipe by Id
+router.get('/recipes/:recipeId', (req,res,next) => {
+
+    const {recipeId} = req.params;
+
+    Recipe.findById(recipeId)
+        .populate('creator')
+        .then(foundRecipe => {
+            res.json({
+                message: "GET /recipes/:recipeId worked",
+                recipe: foundRecipe
+            })
+        })
+        .catch(err => res.json(err))
+})
+
 router.put('/recipes/:recipeId', (req,res,next) => {
     const {recipeId} = req.params;
 

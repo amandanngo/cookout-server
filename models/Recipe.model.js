@@ -16,7 +16,9 @@ const recipeSchema = new Schema({
     ingredients: [{
         type: String
     }],
-    directions: String,
+    directions: [{
+        type: String
+    }],
     pictureUrl: String
 });
 
