@@ -119,7 +119,7 @@ router.delete('/recipes/:recipeId', (req,res,next) => {
 })
 
 // POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
-router.post("/recipeImg", fileUploader.single("imageUrl"), (req, res, next) => {
+router.post("/recipeImg", fileUploader.single("pictureUrl"), (req, res, next) => {
     // console.log("file is: ", req.file)
    
     if (!req.file) {
