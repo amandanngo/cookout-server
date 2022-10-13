@@ -4,6 +4,7 @@ const router = express.Router();
 const Recipe = require('../models/Recipe.model')
 const User = require('../models/User.model')
 
+const fileUploader = require("../config/cloudinary.config");
 
 router.post('/recipes',(req,res,next) => {
 
@@ -51,7 +52,7 @@ router.get('/recipes', (req,res,next) => {
         .then(userRecipes => {
             res.json({recipes: userRecipes})
         })
-        .then(err => res.json(err))
+        .catch(err => res.json(err))
 })
 
 //All users recipes
@@ -116,5 +117,20 @@ router.delete('/recipes/:recipeId', (req,res,next) => {
 
     deleteRecipe();
 })
+
+// POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
+router.post("/recipeImg", fileUploader.single("imageUrl"), (req, res, next) => {
+    // console.log("file is: ", req.file)
+   
+    if (!req.file) {
+      next(new Error("No file uploaded!"));
+      return;
+    }
+    
+    // Get the URL of the uploaded file and send it as a response.
+    // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
+    
+    res.json({ fileUrl: req.file.path });
+  });
 
 module.exports = router;

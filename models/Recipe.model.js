@@ -19,7 +19,7 @@ const recipeSchema = new Schema({
     directions: [{
         type: String
     }],
-    pictureUrl: String
+    imageUrl: String
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
